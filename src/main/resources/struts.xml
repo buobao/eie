@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- 1.12. 自动加载无需启动服务 Convention插件可以自动重新加载配置的功能，无需重启容器，就可以刷新类中包含的action。这自动加载automatic
+        xml 配置文件类似。你必须在struts.xml 中添加以下代码来启用本功能： <constant name="struts.devMode"
+        value="true"/> <constant name="struts.convention.classes.reload" value="true"
+        /> 此功能没有在所有容器中进行过测试，强力建议不要在生产环境中使用。 -->
+    <!-- 是否显示详细错误信息 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 国际化资源文件名称 -->
+    <constant name="struts.custom.i18n.resources" value="messageResources_zh_CN" />
+    <!-- 是否自动加载国际化资源文件 -->
+    <constant name="struts.i18n.reload" value="false" />
+    <!-- convention类重新加载 -->
+    <constant name="struts.convention.classes.reload" value="false" />
+    <!-- 浏览器是否缓存静态内容 -->
+    <constant name="struts.serve.static.browserCache" value="true" />
+    <!--&lt;!&ndash; 配置使用Spring管理Action &ndash;&gt;-->
+    <constant name="struts.objectFactory" value="spring" />
+    <!-- 上传文件大小限制设置 2M,上传路径 -->
+    <constant name="struts.multipart.maxSize" value="2100000" />
+    <constant name="struts.multipart.saveDir" value="/tmp"></constant>
+    <!-- 主题 -->
+    <constant name="struts.ui.theme" value="simple" />
+    <!-- 编码 -->
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+
+    <!-- 后缀 -->
+    <constant name="struts.action.extension" value="action" />
+    <!-- 默认包路径包含action,actions,struts,struts2的所有包都会被struts作为含有Action类的路径来搜索。
+        你可以通过设置struts.convention.package.locators属性来修改这个配置。如： -->
+    <constant name="struts.convention.package.locators" value="web,action" />
+    <!-- 则定义了在项目中，包路径包含web和action的将被视为Action存在的路径来进行搜索。 Com.ustb.web.*/com.ustb.action.*都将被视为含有Action的包路径而被搜索。
+        接着，Convention从前一步找到的package以及其子package中寻找 com.opensymphony.xwork2.Action
+        的实现以及以Action结尾的类： com.example.actions.MainAction com.example.actions.products.Display
+        (implements com.opensymphony.xwork2.Action) com.example.struts.company.details.ShowCompanyDetailsAction -->
+
+    <!-- 结果资源的路径 -->
+    <constant name="struts.convention.result.path" value="/WEB-INF/jsp/" />
+    <!-- URL资源分隔符 执行该action的命令为 如果AaBbAction 则URL=aa-bb.action 方法为aa-bb!add.aciton
+        Result=aa-bb.jsp -->
+    <constant name="struts.convention.action.name.separator"
+              value="-" />
+    <!-- 直接访问方法 感叹号方式(需要开启),官网不推荐使用这种方式,建议大家不要使用 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+    <!-- strust直接访问 静态方法-->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+
+    <package name="basePackage" extends="struts-default">
+        <interceptors>
+            <interceptor-stack name="baseStack">
+                <interceptor-ref name="exception" />
+                <interceptor-ref name="alias" />
+                <interceptor-ref name="servletConfig" />
+                <interceptor-ref name="i18n" />
+                <interceptor-ref name="prepare" />
+                <interceptor-ref name="chain" />
+                <interceptor-ref name="debugging" />
+                <interceptor-ref name="scopedModelDriven" />
+                <interceptor-ref name="modelDriven" />
+                <interceptor-ref name="fileUpload" />
+                <interceptor-ref name="checkbox" />
+                <interceptor-ref name="multiselect" />
+                <interceptor-ref name="staticParams" />
+                <interceptor-ref name="actionMappingParams" />
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError" />
+                <!-- 配置方法级别的校验 -->
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                    <param name="validateAnnotatedMethodOnly">true</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="modelDriven">
+                    <param name="refreshModelBeforeResult">true</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <!-- 配置默认拦截器栈 -->
+        <default-interceptor-ref name="baseStack" />
+        <!-- 未到找Action指向页面 -->
+        <default-action-ref name="errorPage" />
+        <action name="errorPage">
+            <result type="redirect">/html/error404.html</result>
+        </action>
+    </package>
+
+
+    <package name="com" extends="basePackage" namespace="/com/">
+        <interceptors>
+            <interceptor-stack name="adminStack">
+                <interceptor-ref name="baseStack" />
+            </interceptor-stack>
+        </interceptors>
+
+        <!-- 配置默认拦截器栈 -->
+        <default-interceptor-ref name="adminStack" />
+        <global-results>
+            <result name="success">/index.jsp</result>
+        </global-results>
+    </package>
+    </struts>
+
+
+
+        <!--<?xml version="1.0" encoding="UTF-8" ?>-->
+        <!--<!DOCTYPE struts PUBLIC-->
+        <!--"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"-->
+        <!--"http://struts.apache.org/dtds/struts-2.0.dtd">-->
+        <!--<struts>-->
+        <!--&lt;!&ndash; 请求参数的编码方式 &ndash;&gt;-->
+        <!--<constant name="struts.i18n.encoding" value="UTF-8"/>-->
+        <!--&lt;!&ndash; 是否显示详细错误信息 &ndash;&gt;-->
+        <!--<constant name="struts.devMode" value="true" />-->
+        <!--&lt;!&ndash; 是否自动加载国际化资源文件 &ndash;&gt;-->
+        <!--<constant name="struts.i18n.reload" value="false" />-->
+        <!--&lt;!&ndash; convention类重新加载 &ndash;&gt;-->
+        <!--<constant name="struts.convention.classes.reload" value="false" />-->
+        <!--&lt;!&ndash; 指定被struts2处理的请求后缀类型。多个用逗号隔开 &ndash;&gt;-->
+        <!--<constant name="struts.action.extension" value="action,do,htm"/>-->
+        <!--&lt;!&ndash; 当struts.xml改动后，是否重新加载。默认值为false(生产环境下使用),开发阶段最好打开  &ndash;&gt;-->
+        <!--<constant name="struts.configuration.xml.reload" value="true"/>-->
+        <!--&lt;!&ndash; 是否使用struts的开发模式。开发模式会有更多的调试信息。默认值为false(生产环境下使用),开发阶段最好打开  &ndash;&gt;-->
+        <!--<constant name="struts.devMode" value="false"/>-->
+        <!--&lt;!&ndash; 设置浏览器是否缓存静态内容。默认值为true(生产环境下使用),开发阶段最好关闭  &ndash;&gt;-->
+        <!--<constant name="struts.serve.static.browserCache" value="false" />-->
+        <!--&lt;!&ndash; 指定由spring负责action对象的创建-->
+        <!--<constant name="struts.objectFactory" value="spring" />-->
+        <!--&ndash;&gt;-->
+        <!--&lt;!&ndash; 上传文件大小限制设置 5M,上传路径 &ndash;&gt;-->
+        <!--<constant name="struts.multipart.maxSize" value="5100000" />-->
+        <!--<constant name="struts.multipart.saveDir" value="/tmp"></constant>-->
+        <!--&lt;!&ndash; 主题 &ndash;&gt;-->
+        <!--<constant name="struts.ui.theme" value="simple" />-->
+        <!--&lt;!&ndash; 是否开启动态方法调用 &ndash;&gt;-->
+        <!--<constant name="struts.enable.DynamicMethodInvocation" value="false"/>-->
+        <!--&lt;!&ndash; 默认包路径包含action,actions,struts,struts2的所有包都会被struts作为含有Action类的路径来搜索。-->
+        <!--你可以通过设置struts.convention.package.locators属性来修改这个配置。如： &ndash;&gt;-->
+        <!--<constant name="struts.convention.package.locators" value="web,action" />-->
+        <!--&lt;!&ndash; 则定义了在项目中，包路径包含web和action的将被视为Action存在的路径来进行搜索。 Com.ustb.web.*/com.ustb.action.*都将被视为含有Action的包路径而被搜索。-->
+        <!--接着，Convention从前一步找到的package以及其子package中寻找 com.opensymphony.xwork2.Action-->
+        <!--的实现以及以Action结尾的类： com.example.actions.MainAction com.example.actions.products.Display-->
+        <!--(implements com.opensymphony.xwork2.Action) com.example.struts.company.details.ShowCompanyDetailsAction &ndash;&gt;-->
+        <!--&lt;!&ndash; 结果资源的路径 &ndash;&gt;-->
+        <!--<constant name="struts.convention.result.path" value="/WEB-INF/jsp/" />-->
+        <!--&lt;!&ndash; URL资源分隔符 执行该action的命令为 如果AaBbAction 则URL=aa-bb.action 方法为aa-bb!add.aciton-->
+        <!--Result=aa-bb.jsp &ndash;&gt;-->
+        <!--<constant name="struts.convention.action.name.separator"-->
+        <!--value="-" />-->
+        <!--&lt;!&ndash; 直接访问方法 感叹号方式(需要开启),官网不推荐使用这种方式,建议大家不要使用 &ndash;&gt;-->
+        <!--<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>-->
+        <!--&lt;!&ndash; strust直接访问 静态方法&ndash;&gt;-->
+        <!--<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>-->
+
+        <!--<package name="basePackage" extends="struts-default">-->
+        <!--<interceptors>-->
+        <!--<interceptor-stack name="baseStack">-->
+        <!--<interceptor-ref name="exception" />-->
+        <!--<interceptor-ref name="alias" />-->
+        <!--<interceptor-ref name="servletConfig" />-->
+        <!--<interceptor-ref name="i18n" />-->
+        <!--<interceptor-ref name="prepare" />-->
+        <!--<interceptor-ref name="chain" />-->
+        <!--<interceptor-ref name="debugging" />-->
+        <!--<interceptor-ref name="scopedModelDriven" />-->
+        <!--<interceptor-ref name="modelDriven" />-->
+        <!--<interceptor-ref name="fileUpload" />-->
+        <!--<interceptor-ref name="checkbox" />-->
+        <!--<interceptor-ref name="multiselect" />-->
+        <!--<interceptor-ref name="staticParams" />-->
+        <!--<interceptor-ref name="actionMappingParams" />-->
+        <!--&lt;!&ndash;负责将请求参数设置为action属性&ndash;&gt;-->
+        <!--<interceptor-ref name="params">-->
+        <!--<param name="excludeParams">dojo\..*,^struts\..*</param>-->
+        <!--</interceptor-ref>-->
+        <!--<interceptor-ref name="conversionError" />-->
+        <!--&lt;!&ndash; 配置方法级别的校验 &ndash;&gt;-->
+        <!--<interceptor-ref name="validation">-->
+        <!--<param name="excludeMethods">input,back,cancel,browse</param>-->
+        <!--<param name="validateAnnotatedMethodOnly">true</param>-->
+        <!--</interceptor-ref>-->
+        <!--<interceptor-ref name="workflow">-->
+        <!--<param name="excludeMethods">input,back,cancel,browse</param>-->
+        <!--</interceptor-ref>-->
+        <!--<interceptor-ref name="modelDriven">-->
+        <!--<param name="refreshModelBeforeResult">true</param>-->
+        <!--</interceptor-ref>-->
+        <!--</interceptor-stack>-->
+        <!--</interceptors>-->
+        <!--&lt;!&ndash; 配置默认拦截器栈 &ndash;&gt;-->
+        <!--<default-interceptor-ref name="baseStack" />-->
+        <!--&lt;!&ndash; 未到找Action指向页面 &ndash;&gt;-->
+        <!--<default-action-ref name="errorPage" />-->
+        <!--<action name="errorPage">-->
+        <!--<result type="redirect">/html/404.html</result>-->
+        <!--</action>-->
+        <!--</package>-->
+
+        <!--<package name="com" extends="basePackage" namespace="/com/">-->
+        <!--<interceptors>-->
+        <!--<interceptor-stack name="adminStack">-->
+        <!--<interceptor-ref name="baseStack" />-->
+        <!--</interceptor-stack>-->
+        <!--</interceptors>-->
+
+        <!--&lt;!&ndash; 配置默认拦截器栈 &ndash;&gt;-->
+        <!--<default-interceptor-ref name="adminStack" />-->
+        <!--<global-results>-->
+        <!--<result name="success">/WEB-INF/jsp/com/test.jsp</result>-->
+        <!--</global-results>-->
+        <!--</package>-->
+
+        <!--</struts>-->
