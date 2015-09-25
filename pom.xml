@@ -185,17 +185,17 @@
       <artifactId>log4j-over-slf4j</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>log4j</artifactId>
-          <groupId>log4j</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.slf4j</groupId>-->
+      <!--<artifactId>slf4j-log4j12</artifactId>-->
+      <!--<version>${slf4j.version}</version>-->
+      <!--<exclusions>-->
+        <!--<exclusion>-->
+          <!--<artifactId>log4j</artifactId>-->
+          <!--<groupId>log4j</groupId>-->
+        <!--</exclusion>-->
+      <!--</exclusions>-->
+    <!--</dependency>-->
     <!-- 代码直接调用commons-logging会被桥接到slf4j -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -214,6 +214,12 @@
       <artifactId>log4jdbc</artifactId>
       <version>1.2</version>
       <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>4.0.2.RELEASE</version>
+      <scope>test</scope>
     </dependency>
 
 
