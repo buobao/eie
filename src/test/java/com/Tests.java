@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,11 @@ public class Tests {
         TestEntity thisEntity = (TestEntity) session.get(TestEntity.class,1);
         System.out.println(thisEntity.getName());
         session.close();
+    }
+
+    @Test
+    public void fileTest(){
+        File newFile = new File("E:/","new.txt");
     }
 }
 
