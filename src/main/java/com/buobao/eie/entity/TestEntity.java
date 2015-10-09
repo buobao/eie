@@ -18,6 +18,15 @@ public class TestEntity implements Serializable{
     private String name;
     private String dep;
 
+    //不指定构造器时会调用默认的构造器，所以定义自定义构造后需要申明无参构造
+    public TestEntity(){}
+
+    public TestEntity(Integer id, String name, Integer sal){
+        this.id = id;
+        this.name = name;
+        this.sal = sal;
+    }
+
     @Id
     public Integer getId() {
         return id;
