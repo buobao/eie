@@ -1,8 +1,8 @@
 package com.buobao.eie.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class TestEntity implements Serializable{
     private static final long serialVersionUID = -370316274269471219L;
 
-    private Integer id;
+    private String id;
     private Integer sal;
     private String name;
     private String dep;
@@ -21,18 +21,29 @@ public class TestEntity implements Serializable{
     //不指定构造器时会调用默认的构造器，所以定义自定义构造后需要申明无参构造
     public TestEntity(){}
 
-    public TestEntity(Integer id, String name, Integer sal){
+    public TestEntity(String id, String name, Integer sal){
         this.id = id;
         this.name = name;
         this.sal = sal;
     }
 
     @Id
-    public Integer getId() {
+    @Column(
+            length = 32,
+            nullable = false
+    )
+    @GeneratedValue(
+            generator = "uuid"
+    )
+    @GenericGenerator(
+            name = "uuid",
+            strategy = "uuid"
+    )
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,5 +69,15 @@ public class TestEntity implements Serializable{
 
     public void setDep(String dep) {
         this.dep = dep;
+    }
+
+    @Override
+    public String toString() {
+        return "TestEntity{" +
+                "id='" + id + '\'' +
+                ", sal=" + sal +
+                ", name='" + name + '\'' +
+                ", dep='" + dep + '\'' +
+                '}';
     }
 }

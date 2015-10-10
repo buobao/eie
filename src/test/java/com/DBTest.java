@@ -1,9 +1,14 @@
 package com;
 
+import com.buobao.eie.dao.TestEntityDao;
 import com.buobao.eie.entity.TestEntity;
+import com.buobao.eie.service.TestEntityService;
+import com.buobao.eie.utils.Limit;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,18 +19,26 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by dqf on 2015/9/28.
  */
-@TransactionConfiguration(defaultRollback = true)
+@TransactionConfiguration(defaultRollback = false)
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class DBTest extends AbstractTransactionalJUnit4SpringContextTests {
     //@Resource
     private SessionFactory sessionFactory;
     private Session session;
+
+    @Resource
+    private TestEntityDao testEntityDao;
+
+    @Resource
+    private TestEntityService testEntityService;
 
     @Test
     public void test1(){
@@ -139,15 +152,55 @@ public class DBTest extends AbstractTransactionalJUnit4SpringContextTests {
         System.out.println("name:"+t.getName()+",sal:"+t.getSal());
     }
 
+    @Test
+    public void testDao1(){
+//        TestEntity testEntity = (TestEntity) testEntityDao.get("1");
+//        System.out.println(testEntity.getName());
+
+//        TestEntity testEntity = new TestEntity();
+//        testEntity.setName("张飞");
+//        testEntity.setDep("F");
+//        testEntity.setSal(9000);
+//        testEntityDao.add(testEntity);
+
+//        testEntityDao.delete("8a8a8b98504fb0dc01504fb0df030000");
+
+        TestEntity testEntity = (TestEntity) testEntityDao.get("1");
+        testEntity.setName("Jack");
+        testEntityDao.update(testEntity);
+    }
+
+    @Test
+    public void testService1(){
+        TestEntity testEntity = (TestEntity) testEntityService.get("2");
+        System.out.println(testEntity.toString());
+    }
+
+    @Test
+    public void testImportant(){
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("dep", "A");
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(TestEntity.class);
+        //detachedCriteria.add(Restrictions.gt("sal",99));
+        detachedCriteria.add(Restrictions.or(Restrictions.like("name", "%y%"),Restrictions.in("dep", new String[]{"A","C"})));
+        Limit limit = new Limit(null,null,null,detachedCriteria,null,null);
+        List<TestEntity> list = testEntityService.findByLimit(limit);
+        if (list != null){
+            for (TestEntity t:list){
+                System.out.println(t.toString());
+            }
+        }
+    }
+
     @Before
     public void setUp() throws Exception{
-        ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
-        sessionFactory = (SessionFactory)ac.getBean("sessionFactory");
-        session = sessionFactory.openSession();
+//        ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+//        sessionFactory = (SessionFactory)ac.getBean("sessionFactory");
+//        session = sessionFactory.openSession();
     }
 
     @After
     public void tearDown() throws Exception{
-        session.close();
+//        session.close();
     }
 }
