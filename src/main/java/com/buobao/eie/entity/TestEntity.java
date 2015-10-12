@@ -1,19 +1,16 @@
 package com.buobao.eie.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by dqf on 2015/9/21.
  */
 @Entity
 @Table(name = "test")
-public class TestEntity implements Serializable{
-    private static final long serialVersionUID = -370316274269471219L;
+public class TestEntity extends BaseEntity{
+    protected static final long serialVersionUID = -370316274269471210L;
 
-    private String id;
     private Integer sal;
     private String name;
     private String dep;
@@ -25,26 +22,6 @@ public class TestEntity implements Serializable{
         this.id = id;
         this.name = name;
         this.sal = sal;
-    }
-
-    @Id
-    @Column(
-            length = 32,
-            nullable = false
-    )
-    @GeneratedValue(
-            generator = "uuid"
-    )
-    @GenericGenerator(
-            name = "uuid",
-            strategy = "uuid"
-    )
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Integer getSal() {
