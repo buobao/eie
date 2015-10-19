@@ -24,8 +24,8 @@ public class ProducerServiceImpl implements ProducerService {
     private Destination responseDestination;
 
     public void sendMessage(Destination destination, final String message) {
-        System.out.println("---------------生产者发送消息-----------------");
-        System.out.println("---------------生产者发了一个消息：" + message);
+        System.out.println("---------------producer send message-----------------");
+        System.out.println("---------------producer send a message:" + message);
         jmsTemplate.send(destination, new MessageCreator() {
             public Message createMessage(Session session) throws JMSException {
 				/*TextMessage textMessage = session.createTextMessage(message);

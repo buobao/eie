@@ -26,8 +26,8 @@ public class JmsTests {
 
     @Test
     public void testSend() {
-        for (int i=0; i<2; i++) {
-            producerService.sendMessage(queueDestination, "你好，生产者！这是消息：" + (i+1));
+        for (int i=1100; i<1108; i++) {
+            producerService.sendMessage(queueDestination, "Hello,producer.This is message:" + (i+1));
         }
     }
 
@@ -38,7 +38,7 @@ public class JmsTests {
     @Test
     public void testSend1() {
         for (int i=0; i<2; i++) {
-            producerService.sendMessage(topicDestination, "你好，生产者！这是消息：" + (i+1));
+            producerService.sendMessage(topicDestination, "Hello,producer.This is message:" + (i+1));
         }
     }
 }

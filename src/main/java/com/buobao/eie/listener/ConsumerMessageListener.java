@@ -14,10 +14,12 @@ public class ConsumerMessageListener implements MessageListener {
     public void onMessage(Message message) {
         if (message instanceof TextMessage){
             TextMessage textMsg = (TextMessage)message;
-            System.out.println("接收到一个纯文本消息.");
+            System.out.println("Receive a text message.");
              try{
-                 System.out.println("消息的内容是:"+textMsg.getText());
+                 System.out.println("Context is:"+new String(textMsg.getText().getBytes(),"UTF-8"));
              }catch (JMSException e){
+                 e.printStackTrace();
+             }catch (Exception e){
                  e.printStackTrace();
              }
         } else if (message instanceof MapMessage){
@@ -26,8 +28,8 @@ public class ConsumerMessageListener implements MessageListener {
             ObjectMessage objectMessage = (ObjectMessage)message;
             try{
                 Email email = (Email)messageConverter.fromMessage(objectMessage);
-                System.out.println("接收到一个ObjectMessage,包含Enail对象.");
-                System.out.println("email");
+                System.out.println("Receive a ObjectMessage,contains a Email object.");
+                System.out.println(email.toString());
             }catch (JMSException e){e.printStackTrace();}
         }
 

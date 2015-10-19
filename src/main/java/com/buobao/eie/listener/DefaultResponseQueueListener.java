@@ -13,7 +13,7 @@ public class DefaultResponseQueueListener implements MessageListener {
         if (message instanceof TextMessage){
             TextMessage textMessage = (TextMessage)message;
             try {
-                System.out.println("DefaultResponseQueueListener接收到发送到defaultResponseQueue的一个文本消息,内容是:"+textMessage.getText());
+                System.out.println("DefaultResponseQueueListener receive a text message which is send to defaultResponseQueue,context is:"+textMessage.getText());
             } catch (JMSException e) {
                 e.printStackTrace();
             }
