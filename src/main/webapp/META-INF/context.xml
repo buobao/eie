@@ -2,22 +2,59 @@
 
 <Context>
     <Resource name="jms/mqConnectionFactory"
-            auth="Container"
+            auth="TurMan"
             type="org.apache.activemq.ActiveMQConnectionFactory"
             description="JMS Connection Factory"
             factory="org.apache.activemq.jndi.JNDIReferenceFactory"
             brokerURL="tcp://localhost:61616" />
 
     <Resource name="jms/testQueueOne"
-              auth="Container"
+              auth="TurMan"
               type="org.apache.activemq.command.ActiveMQQueue"
               factory="org.apache.activemq.jndi.JNDIReferenceFactory"
               physicalName="TestQueueOne"/>
 
     <Resource name="jms/testQueueTwo"
-              auth="Container"
+              auth="TurMan"
               type="org.apache.activemq.command.ActiveMQQueue"
               factory="org.apache.activemq.jndi.JNDIReferenceFactory"
               physicalName="TestQueueTwo"/>
+
+    <Resource name="jms/queueDestination"
+              auth="TurMan"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="queue"/>
+
+    <Resource name="jms/sessionAwareQueue"
+              auth="TurMan"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="sessionAwareQueue"/>
+
+    <Resource name="jms/adapterQueue"
+              auth="TurMan"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="adapterQueue"/>
+
+    <Resource name="jms/responseQueue"
+              auth="TurMan"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="responseQueue"/>
+
+    <Resource name="jms/defaultResponseQueue"
+              auth="TurMan"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="defaultResponseQueue"/>
+
+
+    <Resource name="jms/topicDestination"
+              auth="TurMan"
+              type="org.apache.activemq.command.ActiveMQTopic"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="topic"/>
 
 </Context>
