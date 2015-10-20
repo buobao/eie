@@ -29,6 +29,7 @@
     <jdbc.driver.version>5.1.31</jdbc.driver.version>
 
     <activemq.version>5.10.0</activemq.version>
+    <redis.version>2.7.2</redis.version>
   </properties>
 
   <dependencies>
@@ -319,6 +320,18 @@
       <!--<version>${activemq.version}</version>-->
     <!--</dependency>-->
     <!-- activeMQ end-->
+
+    <!-- redis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>${redis.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.6</version>
+    </dependency>
 
   </dependencies>
   <build>

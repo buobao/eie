@@ -97,7 +97,9 @@
         <interceptors>
             <interceptor-stack name="adminStack">
                 <interceptor-ref name="baseStack" />
+                <interceptor-ref name="timeCounter"/>
             </interceptor-stack>
+            <interceptor name="timeCounter" class="com.buobao.eie.action.interceptors.TestInterceptor"/>
         </interceptors>
 
         <!-- 配置默认拦截器栈 -->
